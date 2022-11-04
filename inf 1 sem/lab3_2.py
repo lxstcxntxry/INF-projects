@@ -1,30 +1,28 @@
 import re
 
-isu = 331484 % 2
-# мой вариант - 2
+tests = [
+    "ВТ - - - - - ИТМО",  # +
+    "ВТ это ! супер база ИТМО",  # +
+    "ВТ123 это важная часть ИТМО!",  # -
+    "123ВТ это важ-на-я часть ИТМО123",  # -
+    ]
 
-test1 = "123 ВТ это ИТМО!"
-test2 = "123ВТ это важная часть ИТМО!"
-test3 = "ВТ самый лучший универ ИТМО ВТ всех ИТМО ВТИТМО"
-test4 = "ВТВТ ВТ ИТМО123"
-test5 = "ВТ ВТ ВТ ИТМО ИТМО"
-tests = [test1, test2, test3, test4, test5]
+tests_re = [
+    "ВТ ВТ ИТМО ИТМО",  # 4
+    "ВТ ВТ ВТ ВТ ИТМО ИТМО"  # 8
+    ]
 
-print("НОРМАЛЬНЫЙ СПОСОБ")
-for i in tests:
-    temp = re.finditer(r"\bВТ\b( [^ ]+){,4} \bИТМО\b", i)
-    for j in temp:
-        print("Тест", tests.index(i) + 1, "-", j.group())
+for test in tests:
+    temp = re.sub(r"[^ А-Яа-я0-9_]\s", r"", test)
+    res = re.finditer(r"\bВТ\b( [^ ]+){0,4} \bИТМО\b", temp)
 
-print("ТУПОЙ СПОСОБ")
-patterns = [r"\bВТ\b\s+\bИТМО\b",
-            r"\bВТ\b\s+\w+\s+\bИТМО\b",
-            r"\bВТ\b\s+\w+\s+\w+\s+\bИТМО\b",
-            r"\bВТ\b\s+\w+\s+\w+\s+\w+\s+\bИТМО\b",
-            r"\bВТ\b\s+\w+\s+\w+\s+\w+\s+\w+\s+\bИТМО\b"]
+    for r in res:
+        print("test", tests.index(test) + 1, "-", r.group())
 
-for i in tests:
-    for j in patterns:
-        if re.findall(j, i):
-            result = re.findall(j, i)
-            print("Тест", tests.index(i) + 1, "-", result[0])
+for test in tests_re:
+    arr = test.split(" ")
+    for i in range(len(arr)):
+        resultArr = ""
+        for j in range(1, len(arr)):
+            if arr[i] == "ВТ" and arr[j] == "ИТМО":
+                print("test_re", tests_re.index(test) + 1, "-", " ".join(arr[i:j]), "ИТМО")
