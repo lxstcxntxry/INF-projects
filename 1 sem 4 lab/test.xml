@@ -1,0 +1,19 @@
+<day>
+    <name>Cреда</name>
+    <lessons>
+        <lesson1>
+            <name>Информатика(Практика)</name>
+            <time>13:30-15:00</time>
+            <class>1328(371)</class>
+            <type>Очно-дистанционный</type>
+            <teacher>РыбаковСтепанДмитриевич</teacher>
+        </lesson1>
+        <lesson2>
+            <name>Информатика(Практика)</name>
+            <time>13:30-15:00</time>
+            <class>1328(371)</class>
+            <type>Очно-дистанционный</type>
+            <teacher>РыбаковСтепанДмитриевич</teacher>
+        </lesson2>
+    </lessons>
+</day>
