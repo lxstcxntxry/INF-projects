@@ -1,7 +1,7 @@
 import json
 
 
-def json2xml(json_obj, line_padding=""):
+def reWriting(json_obj, line_padding=""):
     result = list()
     json_obj_type = type(json_obj)
 
@@ -9,7 +9,7 @@ def json2xml(json_obj, line_padding=""):
         for tag_name in json_obj:
             sub_obj = json_obj[tag_name]
             result.append(line_padding + "<" + tag_name + ">")
-            result.append(json2xml(sub_obj, "\t" + line_padding))
+            result.append(reWriting(sub_obj, "\t" + line_padding))
             result.append(line_padding + "</" + tag_name + ">")
 
         return "\n".join(result)
@@ -18,9 +18,8 @@ def json2xml(json_obj, line_padding=""):
 
 
 json_file = open("test_libs.json", "r", encoding="utf-8")
-j = json.load(json_file)
 xml_file = open("test_libs.xml", "w", encoding="utf-8")
-xml_file.write(json2xml(j))
+xml_file.write(reWriting(json.load(json_file)))
 
 json_file.close()
 xml_file.close()
