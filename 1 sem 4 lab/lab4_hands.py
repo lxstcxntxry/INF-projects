@@ -1,19 +1,19 @@
 class Main:
-    def __init__(self, string):
-        self.string = string
+    def __init__(self, json_obj):
+        self.json_obj = json_obj
         self.lines = []
         self.temp = []
         self.print = ""
 
     def parser(self):
-        self.string.pop(0)
-        self.string.pop(-1)
-        for i in self.string:
+        self.json_obj.pop(0)
+        self.json_obj.pop(-1)
+        for i in self.json_obj:
             line = ''.join(i.split())
             self.lines.append(line.replace(",", "").replace("\"", ""))
 
     def reWriting(self):
-        level = 0
+        line_padding = 0
         for i in range(len(self.lines)):
             line = self.lines[i]
             if line != "{" and line != "}":
@@ -21,16 +21,16 @@ class Main:
                 tag = parts[0]
                 key = parts[1]
                 if key == "":
-                    self.print += " "*4*level + "<" + tag + ">\n"
+                    self.print += " "*4*line_padding + "<" + tag + ">\n"
                     self.temp.append(tag)
                 else:
-                    self.print += " "*4*level + "<" + tag + ">" + key + "</" + tag + ">\n"
+                    self.print += " "*4*line_padding + "<" + tag + ">" + key + "</" + tag + ">\n"
             else:
                 if line == "{":
-                    level += 1
+                    line_padding += 1
                 if line == "}":
-                    level -= 1
-                    self.print += " " * 4 * level + "</" + self.temp[-1] + ">\n"
+                    line_padding -= 1
+                    self.print += " " * 4 * line_padding + "</" + self.temp[-1] + ">\n"
                     self.temp.pop(-1)
 
 
@@ -45,3 +45,4 @@ file_xml.write(p.print)
 
 file_json.close()
 file_xml.close()
+
